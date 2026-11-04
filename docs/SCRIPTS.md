@@ -328,7 +328,9 @@ Generation fails when the Work Experience entries are not newest-first, and the 
 
 Generation also fails when the CV states a metric or fact that `cv.md` and `article-digest.md` do not back (the same gate as `verify-cv-facts.mjs`); it runs whenever the workspace has a `cv.md`. Pass `--skip-fact-check` to render anyway. With `--batch`, every manifest entry goes through the gate: a blocked entry is recorded as failed in `<manifest>.results.json` and the rest still render.
 
-**Exit codes:** `0` PDF generated, `1` missing arguments or generation failure.
+A render that runs over its page budget (`--max-pages`, default 2, or `cv.max_pages` in `config/profile.yml`) never lands at the output path: it is kept as a sibling `{name}.overflow.pdf` draft (`.overflow-2.pdf` and so on when that name is taken), the output path keeps whatever it held, and nothing is indexed. By default that is a warning and the exit code stays `0`; `--strict-pages` makes it a failure.
+
+**Exit codes:** `0` PDF generated (or kept as an overflow draft under a warning-only budget), `1` missing arguments or generation failure.
 
 ---
 
